@@ -1,0 +1,60 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion 27
+    buildToolsVersion '27.0.0'
+    defaultConfig {
+        applicationId "com.silencecork.unsplash"
+        minSdkVersion 15
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+project.ext {
+    appcompat = "27.0.0"
+    arch = "1.0.0"
+    retrofit = "2.0.2"
+    logging_interceptor = "3.9.1"
+    constraintLayout = "1.0.2"
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+
+    compile "com.android.support:appcompat-v7:$project.appcompat"
+    compile "com.android.support:cardview-v7:$project.appcompat"
+    compile "com.android.support:recyclerview-v7:$project.appcompat"
+    compile "android.arch.lifecycle:runtime:$project.arch"
+    compile "android.arch.lifecycle:extensions:$project.arch"
+    compile "com.squareup.retrofit2:retrofit:$project.retrofit"
+    implementation "com.squareup.okhttp3:logging-interceptor:$project.logging_interceptor"
+    compile "com.squareup.retrofit2:converter-gson:$project.retrofit"
+    annotationProcessor "android.arch.lifecycle:compiler:$project.arch"
+    compile "com.android.support.constraint:constraint-layout:$project.constraintLayout"
+    compile "com.android.support:support-v4:$project.appcompat"
+
+    implementation 'com.github.bumptech.glide:glide:4.4.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.4.0'
+}
