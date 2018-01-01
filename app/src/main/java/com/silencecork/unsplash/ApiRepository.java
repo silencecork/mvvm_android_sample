@@ -2,10 +2,12 @@ package com.silencecork.unsplash;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.Observer;
 import android.util.Log;
 
 import com.silencecork.unsplash.model.Collection;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.OkHttpClient;
@@ -25,7 +27,7 @@ public class ApiRepository {
     private ApiService mApiService;
     private static ApiRepository sInstance;
 
-    final MutableLiveData<List<Collection>> mutableLiveData = new MutableLiveData<>();
+    private List<Collection> mData = new ArrayList<>();
 
     private ApiRepository() {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
@@ -49,25 +51,21 @@ public class ApiRepository {
         return sInstance;
     }
 
-    public LiveData<List<Collection>> getInitObervalbeList() {
-        return mutableLiveData;
-    }
-
-    public LiveData<List<Collection>> getObservableList(int page) {
+    public void getFeaturedCollections(int page, final Observer<List<Collection>> observer) {
         Log.i("LiveData", "call api " + page);
         mApiService.getFeaturedList(ApiService.AUTH_KEY, page, 20).enqueue(new Callback<List<Collection>>() {
             @Override
             public void onResponse(Call<List<Collection>> call, Response<List<Collection>> response) {
-                mutableLiveData.setValue(response.body());
+                List<Collection> data = response.body();
+                observer.onChanged(data);
             }
 
             @Override
             public void onFailure(Call<List<Collection>> call, Throwable t) {
-                mutableLiveData.setValue(null);
+                observer.onChanged(null);
             }
         });
 
-        return mutableLiveData;
     }
 
 }

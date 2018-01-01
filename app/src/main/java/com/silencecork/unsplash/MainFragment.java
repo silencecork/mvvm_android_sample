@@ -34,9 +34,6 @@ public class MainFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        // Create ViewModel use ViewModelProviders
-        mMainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
-
         // isLoading defined in xml
         mBinding.setIsLoading(true);
 
@@ -51,11 +48,21 @@ public class MainFragment extends Fragment {
                 mFeatureListAdapter.setData(collections);
             }
         });
+
+        mMainViewModel.getItemClickEvent().observe(this, new Observer<Long>() {
+            @Override
+            public void onChanged(@Nullable Long id) {
+                Log.i("Click", "click id " + id);
+            }
+        });
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        // Create ViewModel use ViewModelProviders
+        mMainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+
         // binding class name will be the layout file name. e.g. fragment_main -> FragmentMainBinding
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_main, container, false);
 
@@ -66,7 +73,7 @@ public class MainFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mFeatureListAdapter = new FeatureListAdapter();
+        mFeatureListAdapter = new FeatureListAdapter(mMainViewModel.getItemClickEvent());
 
         // add scroller for pagination
         mBinding.list.addOnScrollListener(mOnScrollListener);

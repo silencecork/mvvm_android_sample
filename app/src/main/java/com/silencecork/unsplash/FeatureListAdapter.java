@@ -1,5 +1,7 @@
 package com.silencecork.unsplash;
 
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,11 +19,16 @@ import java.util.List;
 public class FeatureListAdapter extends RecyclerView.Adapter<FeatureListAdapter.FeaturedViewHolder> {
 
     private List<Collection> mData;
+    private MutableLiveData<Long> mItemClickEvent;
+
+    public FeatureListAdapter(MutableLiveData<Long> itemClickEvent) {
+        mItemClickEvent = itemClickEvent;
+    }
 
     @Override
     public FeaturedViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         FeaturedCollectionItemBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.featured_collection_item, parent, false);
-
+        binding.setListener(mItemClickEvent);
         return new FeaturedViewHolder(binding);
     }
 
