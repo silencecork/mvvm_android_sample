@@ -16,7 +16,8 @@ import retrofit2.http.Query;
 
 public interface ApiService {
 
-    String HTTPS_API_URL = "https://api.unsplash.com/";
+//    String HTTPS_API_URL = "https://api.unsplash.com/";
+    String HTTPS_API_URL = "http://192.168.1.14:8080/";
     String AUTH_KEY = "Client-ID 274b0e0761718fcc3c520c2e56825102bd3d121d93e427c06ef43ef7cd80f853";
 
     @GET("collections/featured")

@@ -34,7 +34,7 @@ public class MainViewModel extends AndroidViewModel {
     }
 
     public void getObservableFeaturedList(int page) {
-        ApiRepository.getInstance().getFeaturedCollections(page, new Observer<List<Collection>>() {
+        ApiRepository.getInstance(this.getApplication().getApplicationContext()).getFeaturedCollections(page, new Observer<List<Collection>>() {
             @Override
             public void onChanged(@Nullable List<Collection> collections) {
                 mCollectionListObservable.setValue(collections);

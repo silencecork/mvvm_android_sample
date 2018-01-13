@@ -9,9 +9,8 @@ public class Collection {
     public long id;
     public String title;
     public String published_at;
-    public String updated_at;
     public int total_photos;
-    public CoverPhoto cover_photo;
+    public String cover_photo;
 
     @Override
     public String toString() {

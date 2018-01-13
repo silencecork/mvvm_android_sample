@@ -37,7 +37,7 @@ public class FeatureListAdapter extends RecyclerView.Adapter<FeatureListAdapter.
         Collection collection = mData.get(position);
         holder.mBinding.setCollection(collection);
         holder.mBinding.executePendingBindings();
-        GlideApp.with(holder.mBinding.getRoot().getContext()).load(collection.cover_photo.urls.regular).centerCrop().into(holder.mBinding.image);
+        GlideApp.with(holder.mBinding.getRoot().getContext()).load(collection.cover_photo).centerCrop().into(holder.mBinding.image);
     }
 
     @Override

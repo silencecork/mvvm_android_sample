@@ -27,7 +27,7 @@ public class MainFragment extends Fragment {
     private FragmentMainBinding mBinding;
     private MainViewModel mMainViewModel;
     private FeatureListAdapter mFeatureListAdapter;
-    private int mCurrentPage = 1;
+    private int mCurrentPage = 0;
 
 
     @Override
@@ -41,11 +41,15 @@ public class MainFragment extends Fragment {
         mMainViewModel.getCurrentFeaturedList().observe(this, new Observer<List<Collection>>() {
             @Override
             public void onChanged(@Nullable List<Collection> collections) {
+                if (collections != null && collections.size() > 0) {
+                    mCurrentPage = mCurrentPage + 1;
+
+                    // set data to adapter
+                    mFeatureListAdapter.setData(collections);
+                }
+
                 // when change completed, stop loading
                 mBinding.setIsLoading(false);
-
-                // set data to adapter
-                mFeatureListAdapter.setData(collections);
             }
         });
 
@@ -93,7 +97,7 @@ public class MainFragment extends Fragment {
         super.onResume();
 
         // call api load data
-        loadFeatureList(mCurrentPage);
+        loadFeatureList(mCurrentPage + 1);
     }
 
     @Override
@@ -129,7 +133,7 @@ public class MainFragment extends Fragment {
 
 
     private void loadFeatureList(int page) {
-        Log.i("Main", "load mCurrentPage " + page);
+        Log.i("Main", "load page " + page);
         // start show loading indicator
         mBinding.setIsLoading(true);
 
@@ -154,7 +158,7 @@ public class MainFragment extends Fragment {
             if (!mBinding.getIsLoading()) {
                 if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
                         && firstVisibleItemPosition >= 0) {
-                    loadFeatureList(++mCurrentPage);
+                    loadFeatureList(mCurrentPage + 1);
                 }
             }
         }
