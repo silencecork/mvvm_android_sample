@@ -7,9 +7,7 @@ import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
 import android.support.annotation.Nullable;
 
-import com.silencecork.unsplash.model.Collection;
-
-import java.util.List;
+import com.silencecork.unsplash.model._FeatureCollection;
 
 /**
  * Created by Justin on 2017/12/19.
@@ -17,7 +15,7 @@ import java.util.List;
 
 public class MainViewModel extends AndroidViewModel {
 
-    private MutableLiveData<List<Collection>> mCollectionListObservable = new MutableLiveData<>();
+    private MutableLiveData<_FeatureCollection> mCollectionListObservable = new MutableLiveData<>();
 
     private MutableLiveData<Long> mListClickEvent = new MutableLiveData<>();
 
@@ -25,7 +23,7 @@ public class MainViewModel extends AndroidViewModel {
         super(application);
     }
 
-    public LiveData<List<Collection>> getCurrentFeaturedList() {
+    public LiveData<_FeatureCollection> getCurrentFeaturedList() {
         return mCollectionListObservable;
     }
 
@@ -34,9 +32,9 @@ public class MainViewModel extends AndroidViewModel {
     }
 
     public void getObservableFeaturedList(int page) {
-        ApiRepository.getInstance(this.getApplication().getApplicationContext()).getFeaturedCollections(page, new Observer<List<Collection>>() {
+        ApiRepository.getInstance(this.getApplication().getApplicationContext()).getFeaturedCollections(page, new Observer<_FeatureCollection>() {
             @Override
-            public void onChanged(@Nullable List<Collection> collections) {
+            public void onChanged(@Nullable _FeatureCollection collections) {
                 mCollectionListObservable.setValue(collections);
             }
         });

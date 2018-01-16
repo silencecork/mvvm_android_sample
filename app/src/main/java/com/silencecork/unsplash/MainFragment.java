@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 
 import com.silencecork.unsplash.databinding.FragmentMainBinding;
 import com.silencecork.unsplash.model.Collection;
+import com.silencecork.unsplash.model._FeatureCollection;
 
 import java.util.List;
 
@@ -38,14 +39,17 @@ public class MainFragment extends Fragment {
         mBinding.setIsLoading(true);
 
         // get LiveData from ViewModel and register the observer
-        mMainViewModel.getCurrentFeaturedList().observe(this, new Observer<List<Collection>>() {
+        mMainViewModel.getCurrentFeaturedList().observe(this, new Observer<_FeatureCollection>() {
             @Override
-            public void onChanged(@Nullable List<Collection> collections) {
-                if (collections != null && collections.size() > 0) {
-                    mCurrentPage = mCurrentPage + 1;
+            public void onChanged(@Nullable _FeatureCollection featureCollection) {
+                if (featureCollection != null) {
+                    List<Collection> collections = featureCollection.collections;
+                    if (collections != null && collections.size() > 0) {
+                        mCurrentPage = mCurrentPage + 1;
 
-                    // set data to adapter
-                    mFeatureListAdapter.setData(collections);
+                        // set data to adapter
+                        mFeatureListAdapter.setData(collections);
+                    }
                 }
 
                 // when change completed, stop loading
