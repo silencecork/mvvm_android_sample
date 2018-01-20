@@ -80,7 +80,20 @@ public class ApiRepository {
                 observer.onChanged(null);
             }
         });
+    }
 
+    public void reportClick(String param) {
+        mApiService.reportClick(param).enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                Log.d(TAG, "callback");
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                Log.e(TAG, "error", t);
+            }
+        });
     }
 
     class CacheControlInterceptor implements Interceptor {

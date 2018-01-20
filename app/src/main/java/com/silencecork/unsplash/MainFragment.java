@@ -61,6 +61,7 @@ public class MainFragment extends Fragment {
             @Override
             public void onChanged(@Nullable Long id) {
                 Log.i("Click", "click id " + id);
+                mMainViewModel.reportClick(String.valueOf(id));
             }
         });
     }

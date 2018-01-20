@@ -40,4 +40,7 @@ public class MainViewModel extends AndroidViewModel {
         });
     }
 
+    public void reportClick(String param) {
+        ApiRepository.getInstance(this.getApplication().getApplicationContext()).reportClick(param);
+    }
 }
